@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Video</title>
+</head>
+<body>
+    <h1>Upload Video for Processing</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="video">
+        <input type="submit" value="Upload">
+    </form>
+    <p id="status"></p>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('processing_done', function(data) {
+            document.getElementById('status').innerText = data.message;
+            if (data.json_path) {
+                const link = document.createElement('a');
+                link.href = '/json/' + data.json_path.split('/').pop();
+                link.innerText = 'Download JSON';
+                document.body.appendChild(link);
+            }
+        });
+    </script>
+</body>
+</html>

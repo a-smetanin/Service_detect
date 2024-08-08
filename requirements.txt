@@ -5,3 +5,6 @@ torchvision
 Pillow
 pandas
 requests
+ultralytics
+flask-socketio
+eventlet

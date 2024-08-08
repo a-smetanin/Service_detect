@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processing Status</title>
+</head>
+<body>
+    <h1>Processing Status</h1>
+    <p id="status"></p>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('processing_done', function(data) {
+            document.getElementById('status').innerText = data.message;
+            if (data.json_path) {
+                const link = document.createElement('a');
+                link.href = '/json/' + data.json_path.split('/').pop();
+                link.innerText = 'Download JSON';
+                document.body.appendChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
